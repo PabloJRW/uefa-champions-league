@@ -1,6 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 
@@ -14,16 +15,27 @@ response = requests.get(UEFA_API, headers=headers)
 
 players = response.json()
 
+players_list = []
 for player in players:
-    print(player["player"]["internationalName"])
-    print(player["player"]["translations"]["countryName"]["EN"])
-    print(player["player"]["translations"]["fieldPosition"]["EN"])
-    print(player["player"]["translations"]["nationalFieldPosition"]["EN"])
-    print(f"Team: {player["team"]["internationalName"]}")
-    print(f"Minutes playerd: {player["statistics"][0]["value"]}")
-    print(f"Matches appearance: {player["statistics"][1]["value"]}")
-    print(f"Goals: {player["statistics"][2]["value"]}")
-    print(f"Assists: {player["statistics"][3]["value"]}")
-    print(f"Distance covered: {player["statistics"][4]["value"]}")
-    print(f"Top speed: {player["statistics"][5]["value"]}")
-    print()
+    player_dict = {
+        "id": player["player"]["id"],
+        "playerName": player["player"]["internationalName"],
+        "nationality": player["player"]["translations"]["countryName"]["EN"],
+        "fieldPosition": player["player"]["translations"]["fieldPosition"]["EN"],
+        #"position": player["player"]["detailedFieldPosition"],
+       # "weight(kg)": str(player["player"]["weight"]),
+       # "height(cm)": str(player["player"]["height"]),
+        "age": player["player"]["age"],
+        "team": player["team"]["internationalName"],
+        "minutesPlayed": player["statistics"][0]["value"],
+        "matchesAppareance": player["statistics"][1]["value"],
+        "goals": player["statistics"][2]["value"],
+        "assists": player["statistics"][3]["value"],
+        "distanceCovered(km/h)": player["statistics"][4]["value"],
+        "topSpeed": player["statistics"][5]["value"],
+        }
+
+    players_list.append(player_dict)
+
+players_data = pd.DataFrame(players_list)
+print(players_data)
