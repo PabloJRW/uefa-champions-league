@@ -40,18 +40,26 @@ def extract_data(players):
 
     return players_distribution_data
 
-
 def main():
-    limit = 20
-    offset = 20
-    all_players_data = []
+    limit = 100
+    offset = 0
+    all_distribution_data = []
 
-    players = fetch_data(limit, offset)
-    all_players_data = extract_data(players)
+    while True:
+        players = fetch_data(limit, offset)
+        if not players:
+            break
 
-    print(f"{len(all_players_data)} elements extracted.")
-    players_df = pd.DataFrame(all_players_data)
-    print(players_df)
+        distribution_data = extract_data(players)
+        all_distribution_data.extend(distribution_data)
+
+        print(f"Offset: {offset}")
+        offset += limit
+
+    print(f"{len(all_distribution_data)} elements extracted.")
+    distribution_df = pd.DataFrame(all_distribution_data)
+    distribution_df.to_csv(os.path.join('extraction','raw_data','players_distribution_data.csv'))
+    print("Data extracted!.")
 
 if __name__ == "__main__":
     main()
