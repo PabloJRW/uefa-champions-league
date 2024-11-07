@@ -27,7 +27,7 @@ def extract_data(players):
     for player in players:  
         if player["team"]["internationalName"] in TEAMS_UCL_36: 
             player_dict = {
-                "id": player["player"].get("id"),
+                "id_player": player["player"].get("id"),
                 "player_name": player["player"].get("internationalName"),
                 "nationality": player["player"]["translations"]["countryName"].get("EN") if player["player"]["translations"].get("countryName") else None,
                 "field_position": player["player"]["translations"]["fieldPosition"].get("EN") if player["player"]["translations"].get("fieldPosition") else None,
@@ -35,13 +35,7 @@ def extract_data(players):
                 "weight(kg)": player["player"].get("weight"),
                 "height(cm)": player["player"].get("height"),
                 "age": player["player"].get("age"),
-                "team_id": player["team"].get("id"),
-                "minutes_played": player["statistics"][0].get("value") if len(player["statistics"]) > 0 else None,
-                "matches_appareance": player["statistics"][1].get("value") if len(player["statistics"]) > 1 else None,
-                "goals": player["statistics"][2].get("value") if len(player["statistics"]) > 2 else None,
-                "assists": player["statistics"][3].get("value") if len(player["statistics"]) > 3 else None,
-                "distance_covered(km/h)": player["statistics"][4].get("value") if len(player["statistics"]) > 4 else None,
-                "top_speed": player["statistics"][5].get("value") if len(player["statistics"]) > 5 else None,
+                "id_team": player["team"].get("id"),
                 "player_image": player["player"].get("imageUrl")
             }
             players_data.append(player_dict)    
@@ -66,7 +60,7 @@ def main():
         offset += limit
 
     print(f"{len(all_players_data)} elements extracted.")
-    players_df = pd.DataFrame(all_players_data)
+    players_df = pd.DataFrame(all_players_data, index="id_player")
     players_df.to_csv(os.path.join('extraction','raw_data','players_data.csv'))
     print("Data extracted!.")
 

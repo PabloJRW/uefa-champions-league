@@ -50,5 +50,6 @@ def main():
     players_df = pd.DataFrame(all_attempts_data)
     print(players_df)
 
+
 if __name__ == "__main__":
     main()

@@ -63,5 +63,6 @@ def main():
     goals_df.to_csv(os.path.join('extraction','raw_data','players_goals_data.csv'))
     print("Data extracted!.")
 
+
 if __name__ == "__main__":
     main()

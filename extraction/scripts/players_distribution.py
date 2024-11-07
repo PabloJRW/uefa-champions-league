@@ -26,7 +26,7 @@ def extract_data(players):
     for player in players:  
         if player["team"]["internationalName"] in TEAMS_UCL_36: 
             distribution_dict = {
-                "id": player["player"].get("id"),
+                "id_player": player["player"].get("id"),
                 "passing_accuracy(%)": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="passes_accuracy"), None),   
                 "passes_attempted": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="passes_attempted"), None),
                 "passes_completed": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="passes_completed"), None),
@@ -57,8 +57,8 @@ def main():
         offset += limit
 
     print(f"{len(all_distribution_data)} elements extracted.")
-    distribution_df = pd.DataFrame(all_distribution_data)
-    distribution_df.to_csv(os.path.join('extraction','raw_data','players_distribution_data.csv'))
+    distribution_df = pd.DataFrame(all_distribution_data).set_index("id_player")
+    distribution_df.to_csv(os.path.join('extraction','raw_data','distribution_data.csv'))
     print("Data extracted!.")
 
 if __name__ == "__main__":

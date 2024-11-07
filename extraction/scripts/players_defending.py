@@ -26,7 +26,7 @@ def extract_data(players):
     for player in players:  
         if player["team"]["internationalName"] in TEAMS_UCL_36: 
             defending_dict = {
-                "id": player["player"].get("id"),
+                "id_player": player["player"].get("id"),
                 "balls_recovered": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="recovered_ball"), None),   
                 "tackles": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="tackles"), None),
                 "tackles_won": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="tackles_won"), None),
@@ -55,8 +55,8 @@ def main():
         offset += limit
 
     print(f"{len(all_defending_data)} elements extracted.")
-    defending_df = pd.DataFrame(all_defending_data)
-    defending_df.to_csv(os.path.join('extraction','raw_data','players_defending_data.csv'))
+    defending_df = pd.DataFrame(all_defending_data).set_index("id_player")
+    defending_df.to_csv(os.path.join('extraction','raw_data','defending_data.csv'))
     print("Data extracted!.")
 
 if __name__ == "__main__":
