@@ -1,7 +1,8 @@
 import os
+import sys
 import requests
-from dotenv import load_dotenv
 import pandas as pd
+
 
 
 headers = {
@@ -43,7 +44,7 @@ def extract_data(players):
     return players_data
 
 
-def main():
+def main(output_dir):
     limit = 100
     offset = 0
     all_players_data = []
@@ -56,13 +57,17 @@ def main():
         players_data = extract_data(players)
         all_players_data.extend(players_data)
 
-        print(f"Offset: {offset}")
         offset += limit
 
     print(f"{len(all_players_data)} elements extracted.")
-    players_df = pd.DataFrame(all_players_data, index="id_player")
-    players_df.to_csv(os.path.join('extraction','raw_data','players_data.csv'))
+    players_df = pd.DataFrame(all_players_data).set_index("id_player")
+    players_df.to_csv(os.path.join('extraction','raw_data',output_dir,'players_data.csv'))
     print("Data extracted!.")
 
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1:
+        output_dir = sys.argv[1]
+        main(output_dir)
+    else:
+        print("Error: output_dir argument is missing.")

@@ -36,7 +36,7 @@ def extract_data(teams):
     return list(teams_data.values())
 
 
-def main():   
+def main(output_dir):   
     limit = 100
     offset = 0
     all_teams_data = []
@@ -55,7 +55,7 @@ def main():
     teams_df = pd.DataFrame(all_teams_data)
     teams_df.drop_duplicates("team_id", inplace=True)
     teams_df = teams_df.set_index("team_id")
-    teams_df.to_csv(os.path.join('extraction','raw_data','teams_data.csv'))
+    teams_df.to_csv(os.path.join('extraction','raw_data',output_dir,'teams_data.csv'))
     
 
 if __name__ == "__main__":
