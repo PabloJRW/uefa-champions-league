@@ -1,5 +1,5 @@
 import os
-import pandas as pd
+import csv
 from pymongo import MongoClient
 
 
@@ -9,40 +9,31 @@ COLLECTION = 'day4' # Nombre de la coleccion
 
 # Crea una instancia de MongoClient que se conecta al servidor de MongoDB que se encuentra en 'localhost' (la máquina local)
 client = MongoClient('localhost', 27017)
-# Accede a la base de datos llamada 'supertienda'. Si no existe, MongoDB la creará cuando se inserte algún dato en ella.
+# Accede a la base de datos. Si no existe, MongoDB la creará cuando se inserte algún dato en ella.
 db = client[DATABASE]
-# Accede a la colección llamada 'ordenes' dentro de la base de datos 'supertienda'. 
+# Accede a la colección dentro de la base de datos. 
 # Si la colección no existe, MongoDB la creará cuando se inserte algún documento en ella.
-col = db[COLLECTION]
+collection = db[COLLECTION]
 
-# Ruta del archivo CSV
-FILE_PATH = os.path.join('data','raw','Encuentra24','autos_usados.csv')
+# File path
+file_path = os.path.join('extraction', 'raw_data', COLLECTION)
 
-# Carga del archivo CSV a Pandas
-try:
-    df = pd.read_csv(FILE_PATH, encoding="latin-1")
-except FileNotFoundError:
-    print(f"El archivo no se encuentra en la ruta: {FILE_PATH}")
+for file_name in os.listdir(file_path):
+    if file_name.endswith('.csv'):
+        complete_path = os.path.join(file_path, file_name)
+        print(f"Loading data from {file_name}")
 
+    # Read and load data from CSV files
+    with open(complete_path, newline='', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        data = [row for row in csv_reader]
 
-documents = []
-for index, row in df.iterrows():
-    document = {
-       
-    }
-    documents.append(document)
+        # Insert data into collection
+        if data:
+            collection.insert_many(data)
+            print(f"Data from {file_name} inserted successfully.")
 
-# Insertar los documentos en la colección, evitando duplicados.
-try: 
-    if documents:  # Verifica que la lista de documentos no esté vacía
-        for doc in documents:
-            # Verificar si el documento ya existe basado en múltiples campos, por ejemplo, 'OrderID' y 'CustomerID'
-            query = {
-                
-            }
-            if col.count_documents(query) == 0:  # Si no existe ningún documento con esos campos
-                col.insert_one(doc)  # Insertar el documento
-        print("Documentos guardados correctamente...")
+print("Upload completed.")
 
-except Exception as e:
-    print(f"Error al insertar documentos: {e}")
+# Close session
+client.close()
