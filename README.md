@@ -18,7 +18,7 @@ The goal of this project is to extract player performance data from UEFA Champio
 To get started with this project, follow these steps:
 1. Clone the repository:
 ```bash
-git clone
+git clone git@github.com:PabloJRW/uefa-champions-league.git
 ```
 2. Navigate to the project directory:
 ```bash
