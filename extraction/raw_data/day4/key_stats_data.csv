@@ -1,4 +1,4 @@
-id_player,distance_covered(km/h),top_speed,minutes_played,matches_appareance
+id_player,distance_covered(km),top_speed(km/h),minutes_played,matches_appareance
 250016833,43.71,30.35,360,4
 250105927,41.94,34.55,360,4
 250121533,38.39,35.47,360,4
