@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 # Configura el directorio de salida
-output_dir = "DAY_4"
+output_dir = "day5"
 raw_data_path = os.path.join('raw_data')
 
 # Lista de scripts que quieres ejecutar
@@ -20,7 +20,7 @@ scripts_to_run = [
 ]
 
 # Crear directorio de salida si no existe
-os.makedirs(output_dir, exist_ok=True)
+os.makedirs(os.path.join('extraction','data','raw_data',output_dir), exist_ok=True)
 
 # Función para ejecutar los scripts
 def run_script(script_name, output_dir):

@@ -28,8 +28,8 @@ def extract_data(players):
         if player["team"]["internationalName"] in TEAMS_UCL_36: 
             key_stats_dict = {
                 "id_player": player["player"].get("id"),
-                "distance_covered(km/h)": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="distance_covered"), None),
-                "top_speed": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="top_speed"), None),
+                "distance_covered(km)": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="distance_covered"), None),
+                "top_speed(km/h)": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="top_speed"), None),
                 "minutes_played": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="minutes_played_official"), None),
                 "matches_appareance": next((stat.get("value") for stat in player["statistics"] if stat.get("name")=="matches_appearance"), None)
             }
