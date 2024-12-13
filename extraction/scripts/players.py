@@ -61,7 +61,7 @@ def main(output_dir):
 
     print(f"{len(all_players_data)} elements extracted.")
     players_df = pd.DataFrame(all_players_data).set_index("id_player")
-    players_df.to_csv(os.path.join('extraction','raw_data',output_dir,'players_data.csv'))
+    players_df.to_csv(os.path.join('extraction','data','raw',output_dir,'players_data.csv'))
     print("Data extracted!.")
 
 

@@ -56,7 +56,7 @@ def main(output_dir):
 
     print(f"{len(all_goalkeeping_data)} elements extracted.")
     goalkeeping_df = pd.DataFrame(all_goalkeeping_data).set_index("id_player")
-    goalkeeping_df.to_csv(os.path.join('extraction','raw_data',output_dir,'goalkeeping_data.csv'))
+    goalkeeping_df.to_csv(os.path.join('extraction','data','raw',output_dir,'goalkeeping_data.csv'))
     print("Data extracted!.")
 
 

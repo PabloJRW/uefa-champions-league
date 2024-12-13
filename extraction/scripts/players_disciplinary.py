@@ -55,7 +55,7 @@ def main(output_dir):
 
     print(f"{len(all_disciplinary_data)} elements extracted.")
     disciplinary_df = pd.DataFrame(all_disciplinary_data)
-    disciplinary_df.to_csv(os.path.join('extraction','raw_data',output_dir,'disciplinary_data.csv'))
+    disciplinary_df.to_csv(os.path.join('extraction','data','raw',output_dir,'disciplinary_data.csv'))
     print("Data extracted!.")
 
 

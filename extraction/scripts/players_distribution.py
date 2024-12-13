@@ -57,7 +57,7 @@ def main(output_dir):
 
     print(f"{len(all_distribution_data)} elements extracted.")
     distribution_df = pd.DataFrame(all_distribution_data).set_index("id_player")
-    distribution_df.to_csv(os.path.join('extraction','raw_data',output_dir,'distribution_data.csv'))
+    distribution_df.to_csv(os.path.join('extraction','data','raw',output_dir,'distribution_data.csv'))
     print("Data extracted!.")
 
 
